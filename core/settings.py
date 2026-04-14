@@ -141,3 +141,6 @@ LOGIN_URL = '/accounts/login/'
 CSRF_TRUSTED_ORIGINS = [
     "https://devgear-production.up.railway.app",
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
