@@ -121,7 +121,11 @@ LOGIN_URL = '/accounts/login/'
 
 import os
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    "devgear-production.up.railway.app",
+    "127.0.0.1",
+    "localhost",
+]
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -133,3 +137,7 @@ MIDDLEWARE = [
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://devgear-production.up.railway.app",
+]
