@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart - DevGear{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="fw-bold mb-4">🛒 Your Cart</h2>
+
+    {% if cart_items %}
+
+    <div class="row">
+
+        <!-- Cart Items -->
+        <div class="col-md-8">
+
+            {% for item in cart_items %}
+            <div class="card mb-3 shadow-sm border-0 cart-item">
+
+                <div class="row g-0 align-items-center">
+
+                    <div class="col-md-3">
+                        <img src="{{ item.product.image }}" class="img-fluid rounded-start">
+                    </div>
+
+                    <div class="col-md-6 p-3">
+                        <h5 class="fw-bold">{{ item.product.name }}</h5>
+                        <p class="text-muted small">
+                            {{ item.product.description|truncatewords:10 }}
+                        </p>
+                    </div>
+
+                    <div class="col-md-3 text-center">
+
+                        <p class="mb-1">Qty: {{ item.quantity }}</p>
+
+                        <h6 class="fw-bold">
+                            ${{ item.item_total }}
+                        </h6>
+
+                        <a href="/remove-from-cart/{{ item.product.id }}/"
+                           class="btn btn-sm btn-outline-danger mt-2">
+                            Remove
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- Summary -->
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0 p-4">
+
+                <h4 class="fw-bold mb-3">Summary</h4>
+
+                <p>Total Items: {{ cart_items|length }}</p>
+
+                <h5 class="fw-bold mb-3">
+                    Total: ${{ total }}
+                </h5>
+
+                <a href="/checkout/" class="btn btn-dark w-100">
+                Checkout
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="text-center mt-5">
+        <h4>Your cart is empty 🥲</h4>
+        <a href="/" class="btn btn-dark mt-3">Go Shopping</a>
+    </div>
+
+    {% endif %}
+
+</div>
+
+<style>
+
+.cart-item {
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.cart-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="display:flex;justify-content:center;align-items:center;height:70vh;">
+
+    <div style="background:#020617;padding:40px;border-radius:15px;text-align:center;width:350px;">
+
+        <h2>Logged Out 👋</h2>
+
+        <p style="color:#94a3b8;">Thanks for visiting</p>
+
+        <a href="{% url 'login' %}" 
+           style="display:block;margin:10px 0;padding:10px;background:#38bdf8;color:black;border-radius:8px;text-decoration:none;">
+           Login Again
+        </a>
+
+        <a href="/" 
+           style="display:block;padding:10px;border:1px solid #38bdf8;color:#38bdf8;border-radius:8px;text-decoration:none;">
+           Home
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

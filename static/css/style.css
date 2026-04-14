@@ -1,0 +1,66 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #0f172a;
+    color: #e5e7eb;
+}
+
+/* Navbar */
+.navbar {
+    background: #020617 !important;
+    border-bottom: 1px solid #1e293b;
+}
+
+.navbar-brand {
+    color: #38bdf8 !important;
+    font-weight: 600;
+}
+
+.nav-link {
+    color: #94a3b8 !important;
+}
+
+.nav-link:hover {
+    color: #ffffff !important;
+}
+
+/* Cards */
+.card {
+    background: #020617;
+    color: #e5e7eb;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+}
+
+/* Buttons */
+.btn-dark {
+    background: #38bdf8;
+    border: none;
+    color: #020617;
+}
+
+.btn-dark:hover {
+    background: #0ea5e9;
+    color: #fff;
+}
+
+.btn-outline-dark {
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+}
+
+.btn-outline-dark:hover {
+    background: #38bdf8;
+    color: #020617;
+}
+
+/* Footer */
+footer {
+    background: #020617;
+    border-top: 1px solid #1e293b;
+}
+
+/* Hover Effects */
+.card:hover {
+    transform: translateY(-5px);
+    transition: 0.3s;
+}

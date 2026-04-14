@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">Explore Products</h2>
+
+<div class="row g-4">
+
+{% for product in products %}
+<div class="col-md-4">
+
+    <div style="background:#020617; border:1px solid #1e293b; border-radius:14px; padding:15px; transition:.3s;" 
+         onmouseover="this.style.transform='translateY(-5px)'" 
+         onmouseout="this.style.transform='none'">
+
+        <img src="{{ product.image }}" style="width:100%; border-radius:10px; margin-bottom:10px;">
+
+        <h5 style="color:white;">{{ product.name }}</h5>
+
+        <p style="color:#94a3b8; font-size:14px;">
+            {{ product.description|truncatewords:10 }}
+        </p>
+
+        <h6 style="color:#38bdf8;">${{ product.price }}</h6>
+
+        <div class="d-flex justify-content-between mt-3">
+            <a href="/product/{{ product.id }}/" class="btn btn-outline-light btn-sm">Details</a>
+            <a href="/add-to-cart/{{ product.id }}/" class="btn btn-info btn-sm">Add</a>
+        </div>
+
+    </div>
+
+</div>
+{% endfor %}
+
+</div>
+
+{% endblock %}
