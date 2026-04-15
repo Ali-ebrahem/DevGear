@@ -137,15 +137,11 @@ def checkout(request):
         'cart_count': cart_count,
     })
 
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+
 def create_admin(request):
-    username = 'admin'
-
-    if User.objects.filter(username=username).exists():
-        return HttpResponse('Admin already exists')
-
-    User.objects.create_superuser(
-        username='admin',
-        email='admin@example.com',
-        password='Admin12345'
-    )
-    return HttpResponse('Admin created successfully')
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@email.com', '12345678')
+        return HttpResponse("Admin Created")
+    return HttpResponse("Already exists")
