@@ -1,15 +1,76 @@
 {% extends 'base.html' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Register - DevGear{% endblock %}
 
 {% block content %}
-<div class="container mt-5" style="max-width: 500px;">
-    <h2 class="mb-4 text-center">Create Account</h2>
+<div class="container py-5" style="max-width: 500px;">
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-dark w-100">Register</button>
-    </form>
+    <div style="background:#0f172a; border:1px solid #1e293b; border-radius:18px; padding:30px;">
+
+        <h2 class="text-center mb-4 text-light fw-bold">Create Account</h2>
+
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                Please fix the errors below.
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label text-light">Username</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="text-danger small">{{ form.username.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-light">Password</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="text-danger small">{{ form.password1.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label text-light">Confirm Password</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="text-danger small">{{ form.password2.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-info w-100 fw-semibold">
+                Register
+            </button>
+        </form>
+
+        <p class="mt-4 text-center text-secondary">
+            Already have an account?
+            <a href="{% url 'login' %}" style="color:#38bdf8;">Login</a>
+        </p>
+
+    </div>
+
 </div>
+
+<style>
+    input {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #1e293b;
+        background: #020617;
+        color: #e2e8f0;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 0.15rem rgba(56, 189, 248, 0.2);
+    }
+</style>
+
 {% endblock %}

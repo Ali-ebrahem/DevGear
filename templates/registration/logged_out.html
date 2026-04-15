@@ -1,27 +1,35 @@
 {% extends 'base.html' %}
 
+{% block title %}Logged Out - DevGear{% endblock %}
+
 {% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+        <div style="width: 100%; max-width: 420px; background: #0f172a; border: 1px solid #1e293b; border-radius: 20px; padding: 36px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);">
 
-<div style="display:flex;justify-content:center;align-items:center;height:70vh;">
+            <div style="width: 72px; height: 72px; margin: 0 auto 20px; border-radius: 50%; background: rgba(56, 189, 248, 0.12); display: flex; align-items: center; justify-content: center; font-size: 30px;">
+                👋
+            </div>
 
-    <div style="background:#020617;padding:40px;border-radius:15px;text-align:center;width:350px;">
+            <h2 class="fw-bold text-light mb-2">Logged Out</h2>
 
-        <h2>Logged Out 👋</h2>
+            <p style="color:#94a3b8; font-size: 15px; line-height: 1.8; margin-bottom: 28px;">
+                You have been logged out successfully. Thanks for visiting DevGear.
+            </p>
 
-        <p style="color:#94a3b8;">Thanks for visiting</p>
+            <div class="d-grid gap-3">
+                <a href="{% url 'login' %}"
+                   class="btn btn-info fw-semibold py-2">
+                    Login Again
+                </a>
 
-        <a href="{% url 'login' %}" 
-           style="display:block;margin:10px 0;padding:10px;background:#38bdf8;color:black;border-radius:8px;text-decoration:none;">
-           Login Again
-        </a>
+                <a href="/"
+                   class="btn btn-outline-light py-2">
+                    Back to Home
+                </a>
+            </div>
 
-        <a href="/" 
-           style="display:block;padding:10px;border:1px solid #38bdf8;color:#38bdf8;border-radius:8px;text-decoration:none;">
-           Home
-        </a>
-
+        </div>
     </div>
-
 </div>
-
 {% endblock %}
