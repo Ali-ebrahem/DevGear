@@ -2,16 +2,21 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from .models import Product
-from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.db.models import Q
+
+from .models import Product
+
 
 def home(request):
     query = request.GET.get('q', '').strip()
     products = Product.objects.all()
 
     if query:
-        products = products.filter(name__icontains=query) | products.filter(description__icontains=query)
+        products = products.filter(
+            Q(name__icontains=query) | Q(description__icontains=query)
+        )
 
     cart = request.session.get('cart', {})
     cart_count = sum(cart.values())
@@ -137,11 +142,24 @@ def checkout(request):
         'cart_count': cart_count,
     })
 
-from django.http import HttpResponse
-from django.contrib.auth.models import User
 
 def create_admin(request):
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser('admin', 'admin@email.com', '12345678')
-        return HttpResponse("Admin Created")
-    return HttpResponse("Already exists")
+    username = 'admin'
+    email = 'admin@email.com'
+    password = '12345678'
+
+    user, created = User.objects.get_or_create(
+        username=username,
+        defaults={'email': email}
+    )
+
+    user.email = email
+    user.is_staff = True
+    user.is_superuser = True
+    user.is_active = True
+    user.set_password(password)
+    user.save()
+
+    if created:
+        return HttpResponse("Admin created and password set")
+    return HttpResponse("Admin updated and password reset")
