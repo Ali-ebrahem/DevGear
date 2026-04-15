@@ -1,18 +1,17 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from .models import Product
 from django.contrib.auth.decorators import login_required
-
-
+from .models import Product
+from django.http import HttpResponse
+from django.contrib.auth.models import User
 
 def home(request):
-    query = request.GET.get('q')
+    query = request.GET.get('q', '').strip()
+    products = Product.objects.all()
 
     if query:
-        products = Product.objects.filter(name__icontains=query)
-    else:
-        products = Product.objects.all()
+        products = products.filter(name__icontains=query) | products.filter(description__icontains=query)
 
     cart = request.session.get('cart', {})
     cart_count = sum(cart.values())
@@ -75,15 +74,8 @@ def cart_view(request):
         'cart_count': cart_count,
     })
 
-    cart_count = sum(cart.values())
 
-    return render(request, 'shop/cart.html', {
-        'cart_items': cart_items,
-        'total': total,
-        'cart_count': cart_count,
-    })
-
-
+@login_required
 def remove_from_cart(request, id):
     cart = request.session.get('cart', {})
     product_id = str(id)
@@ -105,7 +97,13 @@ def register(request):
     else:
         form = UserCreationForm()
 
-    return render(request, 'shop/register.html', {'form': form})
+    cart = request.session.get('cart', {})
+    cart_count = sum(cart.values())
+
+    return render(request, 'shop/register.html', {
+        'form': form,
+        'cart_count': cart_count,
+    })
 
 
 @login_required
@@ -125,12 +123,29 @@ def checkout(request):
             'item_total': item_total,
         })
 
+    cart_count = sum(cart.values())
+
     if request.method == 'POST':
-        # هنا ممكن بعدين نربط ب Payment
-        request.session['cart'] = {}  # تفريغ الكارت
-        return render(request, 'shop/success.html')
+        request.session['cart'] = {}
+        return render(request, 'shop/success.html', {
+            'cart_count': 0,
+        })
 
     return render(request, 'shop/checkout.html', {
         'cart_items': cart_items,
         'total': total,
+        'cart_count': cart_count,
     })
+
+def create_admin(request):
+    username = 'admin'
+
+    if User.objects.filter(username=username).exists():
+        return HttpResponse('Admin already exists')
+
+    User.objects.create_superuser(
+        username='admin',
+        email='admin@example.com',
+        password='Admin12345'
+    )
+    return HttpResponse('Admin created successfully')
